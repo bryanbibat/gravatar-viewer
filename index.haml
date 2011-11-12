@@ -1,0 +1,35 @@
+!!!
+%head
+  %title Gravatar Viewer
+  %link{ rel: "stylesheet", href: "http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css" }
+%body
+  .container
+    .content
+      .page-header
+        %h1 Gravatar Viewer
+      .row
+        .span16
+          %form#submission-form
+            .clearfix
+              %label{ for: "email" } Email Address
+              .input
+                %input#email{ type: "email", name: "email" }
+                %input{ type: "submit", value: "Get Gravatar" }
+      .row#gravatar
+        .span16{ style: "padding-left: 150px" }
+  %script{ type: "text/javascript", src: "http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" }
+  %script{ type: "text/javascript", src: "https://raw.github.com/blueimp/jQuery-MD5/master/jquery.md5.js" }
+  :javascript
+    $(document).ready(function() {
+      $("#gravatar").hide();
+      $("#submission-form").submit(function() {
+        $("#grav-image").remove();
+        if ($("#email").val().length) {
+          var hash = $.md5($("#email").val().toLowerCase());
+          $("#gravatar .span16").append("<img id='grav-image' src='http://www.gravatar.com/avatar/" + hash + "'>");
+          $("#gravatar").show();
+        }
+        return false;
+      });
+    });
+
